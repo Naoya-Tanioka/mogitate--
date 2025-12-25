@@ -1,87 +1,129 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/register.css')}}">
+<link rel="stylesheet" href="{{ asset('css/register.css') }}">
 @endsection
 
 @section('content')
-    <div class="form-group">
-        <h2 class="form__heading">商品登録</h2>
-        <div class="form-group__inner">
-            <form action="/products" method="post">
-                @csrf
-                <div class="product-register-form">
-                    <label class="product-register_label">商品名<span class="product-register_required-box">
-                        <span class="product-register_required">必須</span>
-                    </span>
-                    </label>
-                    <input class="product-register-name_input" type="text" name="name" id="name" value="{{old('name') }}" placeholder="商品名を入力">
-                    <p class="product-name_error-message">
-                        @error('name')
-                        {{$message}}
-                        @enderror
-                    </p>
-                </div>
-                <div class="product-register-form">
-                <div class="product-register-price">
-                    <label class="product-register_label">値段<span class="product-register_required-box">
-                        <span class="product-register_required">必須</span>
-                    </span>
-                    </label>
-                    <input  class="product-register-price_input" type="text" name="price" id="price" value="{{old('price')}}" placeholder="値段を入力">
-                    <p class="price_error-message">
-                        @error('price')
-                        {{$message}}
-                        @enderror
-                    </p>
-                </div>
-                <div class="product-register-form">
-                    <div  class="product-register-image">
-                        <label class="product-register_label">商品画像<span class="product-register_required-box">
-                            <span class="product-register_required">必須</span>
-                        </span>
-                        </label>
-                        <input type="file">
-                        <p class="images_error-message">
-                            @error('price')
-                            {{$message}}
-                            @enderror
-                        </p>
-                    </div>
-                </div>
-                <div class="product-register-form">
-                    <div class="product-register-season">
-                        <label class="product-register_label">季節<span class="product-register_required-box">
-                            <span class="product-register_required">必須</span>
-                        </span>
-                        <span class="season-choice">複数選択可</span>
-                        </label>
-                        <input type="checkbox-spring">春
-                        <input type="checkbox-summer">夏
-                        <input type="checkbox-autumn">秋
-                        <input type="checkbox-winter">冬
-                        <p class="seasons_error-message">
-                            @error('price')
-                            {{$message}}
-                            @enderror
-                        </p>
-                    </div>
-                </div>
-                <div class="product-register-form">
-                    <div class="product-register-explain">
-                        <label class="product-register_label">商品説明   <span class="product-register_required-box">
-                            <span class="product-register_required">必須
-                            </span>
-                        </span>
-                        </label>
-                        <textarea name="product-explain_textarea" cols="34" rows="10"></textarea>
-                    </div>
-                </div>
-                <div class="product-register-form__btn-inner">
-                    <input class="product-register-form__back-btn btn" type="submit" value="戻る" name="back">
-                    <input class="product-register-form__register-btn" type="submit" value="登録" name="register">
-                </div>
-            </form>
+<div class="register">
+    <h2 class="register__title">商品登録</h2>
+
+    <form class="register__form" action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="field">
+            <label class="label" for="name">
+                商品名 <span class="required">必須</span>
+            </label>
+
+            <input
+                class="input"
+                type="text"
+                name="name"
+                id="name"
+                value="{{ old('name') }}"
+                placeholder="商品名を入力"
+            >
+
+            @error('name')
+            <p class="error">{{ $message }}</p>
+            @enderror
         </div>
-    </div>
+
+        <div class="field">
+            <label class="label" for="price">
+                値段 <span class="required">必須</span>
+            </label>
+
+            <input
+                class="input"
+                type="number"
+                name="price"
+                id="price"
+                value="{{ old('price') }}"
+                placeholder="値段を入力"
+            >
+
+            @error('price')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="field">
+            <label class="label" for="image">
+                商品画像 <span class="required">必須</span>
+            </label>
+
+            <input
+                class="file"
+                type="file"
+                name="image"
+                id="image"
+                accept="image/png,image/jpeg"
+            >
+
+            @error('image')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="field">
+            <div class="label">
+                季節 <span class="required">必須</span>
+                <span class="note">複数選択可</span>
+            </div>
+
+            @php
+                $oldSeasons = (array) old('seasons', []);
+            @endphp
+
+            <div class="season">
+                @foreach($seasons as $season)
+                    <label class="season__item">
+                        <input
+                            class="season__check"
+                            type="checkbox"
+                            name="seasons[]"
+                            value="{{ $season->id }}"
+                            {{ in_array((string)$season->id, $oldSeasons, true) ? 'checked' : '' }}
+                        >
+                        <span>{{ $season->name }}</span>
+                    </label>
+                @endforeach
+            </div>
+
+            @error('seasons')
+            <p class="error">{{ $message }}</p>
+            @enderror
+
+            @error('seasons.0')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="field">
+            <label class="label" for="description">
+                商品説明 <span class="required">必須</span>
+            </label>
+
+            <textarea
+                class="textarea"
+                name="description"
+                id="description"
+                cols="30"
+                rows="8"
+                maxlength="120"
+                placeholder="商品の説明を入力"
+            >{{ old('description') }}</textarea>
+
+            @error('description')
+            <p class="error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="actions">
+            <a class="btn btn--ghost" href="{{ route('products.index') }}">戻る</a>
+            <button class="btn btn--primary" type="submit">登録</button>
+        </div>
+    </form>
+</div>
 @endsection

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Season;
+
 
 class Product extends Model
 {
@@ -11,8 +13,8 @@ class Product extends Model
 
     protected $fillable = ['name', 'price','image', 'description'];
 
-    public function product()
+    public function seasons()
     {
-    return $this ->hasOne('App\Models\Product_Season');
+    return $this ->belongsToMany(Season::class,'product_season','product_id','season_id')->withTimestamps();
     }
 };

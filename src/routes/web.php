@@ -14,4 +14,9 @@ use App\Http\Controllers\MogitateController;
 |
 */
 
-Route::get('/', [MOGITATEController::class, 'index']);
+Route::get('/products', [MogitateController::class, 'index'])->name('products.index');
+Route::get('products/register', [MogitateController::class, 'createForm'])->name('products.create');
+Route::post('products/register', [MogitateController::class, 'store'])->name('products.store');
+Route::get('products/detail/{product}', [MogitateController::class, 'show'])->name('products.show');
+Route::put('products/{product}/update', [MogitateController::class, 'update'])->name('products.update');
+Route::delete('products/{product}/delete',[MogitateController::class,'destroy'])->name('products.destroy');

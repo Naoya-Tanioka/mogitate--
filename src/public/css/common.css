@@ -1,4 +1,44 @@
-html,
+* {
+    box-sizing: border-box;
+}
+
 body {
-    height: 100%;
+    margin: 0;
+    background: rgb(245, 242, 238);
+    color: #222;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+}
+
+.header {
+    height: 56px;
+    border-bottom: 1px solid #e6e6e6;
+    background: #fff;
+}
+
+.header__inner {
+    height: 56px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__logo {
+    text-decoration: none;
+    font-weight: 700;
+    font-style: italic;
+    color: #f2a100;
+    letter-spacing: 0.2px;
+}
+
+.main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 24px 60px;
+}
+
+a {
+    color: inherit;
 }

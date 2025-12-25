@@ -9,18 +9,19 @@
     @yield('css')
 </head>
 
-<body>
-    <header class="header">
-        <div class="header__inner">
-            <div class="header__logo">mogitate</div>
-        </div>
-                @yield('header_button')
+    <body>
+        <header class="header">
+            <div class="header__inner">
+                <a class="header__logo" href="{{ route('products.index') }}">mogitate</a>
+                <div class="header__actions">
+                    @yield('header_right')
+                </div>
             </div>
-    </header>
+        </header>
 
-    <main>
-        @yield('content')
-    </main>
+        <main>
+            @yield('content')
+        </main>
 
-</body>
+    </body>
 </html>
