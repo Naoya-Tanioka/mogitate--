@@ -35,7 +35,7 @@ MySQL8.0.26
 
 ##ER図
 
-![ER図](docs/mogitate.drawio.png)
+![ER図](docs/Mogitate.drawio.png)
 
 ##URL
 ・開発環境：http://localhost/
